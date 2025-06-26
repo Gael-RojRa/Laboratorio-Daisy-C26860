@@ -62,7 +62,44 @@ function addProject(name: string) {
     }
   }
 
-  return { projects, addProject, completeTask, addTask  };
+  function editProjectName(projectId: string, newName: string) {
+    const project = projects.value.find(p => p.id === projectId);
+    if (project) {
+      project.name = newName;
+    }
+  }
+
+  function editTaskName(projectId: string, taskId: string, newName: string) {
+    const project = projects.value.find(p => p.id === projectId);
+    if (project) {
+      const task = project.tasks.find(t => t.id === taskId);
+      if (task) {
+        task.name = newName;
+      }
+    }
+  }
+
+  function deleteTask(projectId: string, taskId: string) {
+    const project = projects.value.find(p => p.id === projectId);
+    if (project) {
+      project.tasks = project.tasks.filter(t => t.id !== taskId);
+    }
+  }
+
+  function deleteProject(projectId: string) {
+    projects.value = projects.value.filter(p => p.id !== projectId);
+  }
+
+  return { 
+    projects, 
+    addProject, 
+    completeTask, 
+    addTask, 
+    editProjectName, 
+    editTaskName, 
+    deleteTask, 
+    deleteProject 
+  };
 
 })
 
